@@ -128,7 +128,6 @@ let initializeMapEditor = (map, options) => {
 let startDrawing = async (type, sourceId) => {
     drawType = type
     mapSourceId = sourceId
-    console.log(mapSourceId)
     enabledMapMode = MAP_MODES.ADD
     await addSources([ "TEMP_SOURCE"])
 }
@@ -206,17 +205,13 @@ let onAddPolygon = async (event) => {
             if (!feature) {
                 await addLayers(["TEMP_LAYER"])
                 let newFeature = {...polygonFeature}
-                console.log({newFeature})
-
-                console.log(event.lngLat)
-                newFeature.geometry.coordinates[0] = [event.lngLat.lng, event.lngLat.lat]
-                newFeature.geometry.coordinates[1] = [event.lngLat.lng, event.lngLat.lat]
-                console.log({newFeature})
+                newFeature.geometry.coordinates=[[]]
+                newFeature.geometry.coordinates[0].push([event.lngLat.lng, event.lngLat.lat]);
+                newFeature.geometry.coordinates[0].push([event.lngLat.lng, event.lngLat.lat]);
                 await appendFeatureToSource(TEMP_SOURCE, newFeature)
             } else {
                  feature = await getFeatureFromSource(TEMP_SOURCE)
-                console.log({feature})
-                let coordinates = feature.geometry.coordinates
+                let coordinates = feature.geometry.coordinates[0]
                 coordinates?.splice(coordinates?.length - 1, 0, [event.lngLat.lng, event.lngLat.lat]);
                 await updateFeature(TEMP_SOURCE, feature)
             }
@@ -257,7 +252,6 @@ let addLayers = async (layersNames) => {
 }
 
 let appendFeatureToSource = async (source, feature) => {
-    console.log(feature)
     let data = await mapInstance?.getSource(source)?.getData()
     data?.features?.push(feature)
     mapInstance?.getSource(source)?.setData(data)
@@ -270,6 +264,5 @@ let updateFeature = async (source, updatedFeature, index) => {
 
 let getFeatureFromSource = async (sourceId) => {
     let data = await mapInstance?.getSource(sourceId)?.getData()
-    console.log(data,"ddd")
     return data.features[0]
 }
