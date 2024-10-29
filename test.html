@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+
+
+    <link href="https://www.sentencestudio.com/css/global.css" rel="stylesheet">
+    <link href="https://www.sentencestudio.com/css/common.css" rel="stylesheet">
+    <link href="https://www.sentencestudio.com/css/media.css" rel="stylesheet">
+    <link href="https://www.sentencestudio.com/css/layouts.css" rel="stylesheet">
+    <link href="https://maphero.io/maphero.css" rel="stylesheet">
+
+    <script src="https://www.sentencestudio.com/js/common.js"></script>
+    <script src="https://www.sentencestudio.com/js/data.js"></script>
+    <script src="https://www.sentencestudio.com/js/sentence.js"></script>
+    <script src="https://www.sentencestudio.com/js/elements.js"></script>
+    <script src="https://www.sentencestudio.com/js/components.js"></script>
+    <script src="https://maphero.io/maphero.js"></script>
+    <script src="https://maphero.io/maphero.js"></script>
+    <script src="/mapLibrary.js"></script>
+
+
+    <title>TEST</title>
+</head>
+
+<body>
+<script>
+    let mapH;
+    onload = async () => {
+        await renderAsync(_row({class: ' -p -m h100p '}, [
+            _wraper({id: 'container', class: 'h100p -m -r w100p pr'}, [
+                    mapH = mapHeroMap({
+                        container: 'container',
+                        style: 'https://palestinepublicmap-oreedoo.maphero.io/style.json',
+                        class: 'w100p h100p pa z0',
+                        token: "JgNPJvg58vdtuZ4Zm6Dd9IZlRnaslZz2ZYVV",
+                        center: [35.2, 31.9],
+                        zoom: 9
+                    }, {}, []),
+                ],
+            )
+        ]))
+
+        let preDefinedAreaSrc = {
+            "type": "geojson",
+            "data": {
+                "type": "FeatureCollection",
+                "features": []
+            }
+        }
+        setTimeout(async () => {
+            await mapH?.map?.addSource("PRE_DEFINED_AREA_SRC", preDefinedAreaSrc)
+            initializeMapEditor(mapH.map)
+            await startDrawing("Polygon", "PRE_DEFINED_AREA_SRC")
+        }, 1000)
+
+
+    }
+
+</script>
+</body>
+
+</html>
+

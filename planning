@@ -1,0 +1,20 @@
+initializeMapEditor(mapInstance, options)
+options = {
+    onCreateCallback?,
+    onEditCallback?,
+    onDeleteCallback?
+}
+
+startDrawing(type, sourceId)
+type = point / polygon / circle/ line
+startEditing(sourceId)
+startDeleting(sourceId)
+
+POINTS_LAYER  --> TEMP_SOURCE
+MIDDLE_POINTS_LAYER -->  MIDDLE_POINTS_TEMP_SOURCE
+TEMP_LAYER  -->  TEMP_SOURCE
+DASH_LINE_LAYER --> TEMP_SOURCE
+
+ORIGINAL_SOURCE
+TEMP_SOURCE
+MIDDLE_POINTS_TEMP_SOURCE
